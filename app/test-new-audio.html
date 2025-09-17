@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 New Audio Files Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #10b981, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+        .audio-section {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .audio-item {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .audio-item:hover {
+            border-color: #6366f1;
+            background: rgba(255,255,255,0.1);
+        }
+        .working {
+            border-color: #10b981;
+        }
+        .error {
+            border-color: #ef4444;
+        }
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .success {
+            background: #10b981;
+            color: white;
+        }
+        .loading {
+            background: #f59e0b;
+            color: white;
+        }
+        .failed {
+            background: #ef4444;
+            color: white;
+        }
+        .celebration {
+            text-align: center;
+            background: linear-gradient(45deg, #10b981, #059669);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+        .celebration.show {
+            display: block;
+            animation: celebrationPulse 2s ease-in-out infinite;
+        }
+        @keyframes celebrationPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Fresh Audio Files Test</h1>
+        <p style="text-align: center; font-size: 1.2rem; opacity: 0.9;">
+            Testing all the brand new, working audio files!
+        </p>
+
+        <div class="audio-section">
+            <h2>🔔 Bell Sounds (Start/End/Interval)</h2>
+            <div class="audio-grid">
+                <div class="audio-item" id="tibetan-bell">
+                    <h3>🎵 Tibetan Bell</h3>
+                    <span class="status-badge loading" id="tibetan-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('tibetan')" onerror="markError('tibetan')">
+                        <source src="sounds/tibetan-bell.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Primary meditation bell - 800Hz</em></p>
+                </div>
+
+                <div class="audio-item" id="soft-chime">
+                    <h3>🔕 Soft Chime</h3>
+                    <span class="status-badge loading" id="soft-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('soft')" onerror="markError('soft')">
+                        <source src="sounds/soft-chime.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Gentle interval bell - 700Hz</em></p>
+                </div>
+
+                <div class="audio-item" id="temple-gong">
+                    <h3>🏛️ Temple Gong</h3>
+                    <span class="status-badge loading" id="temple-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('temple')" onerror="markError('temple')">
+                        <source src="sounds/temple-gong.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Deep session end - 600Hz</em></p>
+                </div>
+
+                <div class="audio-item" id="singing-bowl">
+                    <h3>🎶 Singing Bowl</h3>
+                    <span class="status-badge loading" id="singing-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('singing')" onerror="markError('singing')">
+                        <source src="sounds/singing-bowl.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Harmonic meditation bell - 650Hz</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="audio-section">
+            <h2>🌿 Ambient Sounds (Background)</h2>
+            <div class="audio-grid">
+                <div class="audio-item" id="rain-sound">
+                    <h3>🌧️ Rain</h3>
+                    <span class="status-badge loading" id="rain-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('rain')" onerror="markError('rain')">
+                        <source src="sounds/rain.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Gentle rainfall ambience</em></p>
+                </div>
+
+                <div class="audio-item" id="ocean-sound">
+                    <h3>🌊 Ocean</h3>
+                    <span class="status-badge loading" id="ocean-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('ocean')" onerror="markError('ocean')">
+                        <source src="sounds/ocean.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Peaceful ocean waves</em></p>
+                </div>
+
+                <div class="audio-item" id="forest-sound">
+                    <h3>🌲 Forest</h3>
+                    <span class="status-badge loading" id="forest-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('forest')" onerror="markError('forest')">
+                        <source src="sounds/forest.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Nature sounds with birds</em></p>
+                </div>
+
+                <div class="audio-item" id="white-noise-sound">
+                    <h3>⚪ White Noise</h3>
+                    <span class="status-badge loading" id="white-status">Loading...</span>
+                    <audio controls onloadeddata="markWorking('white')" onerror="markError('white')">
+                        <source src="sounds/white-noise.wav" type="audio/wav">
+                        Your browser doesn't support the audio element.
+                    </audio>
+                    <p><em>Focus-enhancing background</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">
+            <h2>🎉 SUCCESS!</h2>
+            <p><strong>All audio files are working perfectly!</strong></p>
+            <p>Your meditation timer now has crystal-clear, never-corrupted audio files.</p>
+            <p>🧘 <strong>Ready for perfect meditation sessions!</strong></p>
+            <div style="margin: 20px 0;">
+                <a href="index.html" style="background: white; color: #059669; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 10px;">🧘 Go to Meditation Timer</a>
+            </div>
+        </div>
+
+        <div class="audio-section">
+            <h3>🎯 Test Results Summary</h3>
+            <div id="summary">
+                <p>Loading audio files...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let workingCount = 0;
+        let totalCount = 8;
+        let results = {};
+
+        function markWorking(type) {
+            const statusElement = document.getElementById(type + '-status');
+            const containerElement = document.getElementById(type + '-bell') || 
+                                   document.getElementById(type + '-chime') ||
+                                   document.getElementById(type + '-gong') ||
+                                   document.getElementById(type + '-bowl') ||
+                                   document.getElementById(type + '-sound');
+            
+            statusElement.textContent = 'Working ✅';
+            statusElement.className = 'status-badge success';
+            
+            if (containerElement) {
+                containerElement.classList.add('working');
+            }
+            
+            workingCount++;
+            results[type] = 'working';
+            updateSummary();
+        }
+
+        function markError(type) {
+            const statusElement = document.getElementById(type + '-status');
+            const containerElement = document.getElementById(type + '-bell') || 
+                                   document.getElementById(type + '-chime') ||
+                                   document.getElementById(type + '-gong') ||
+                                   document.getElementById(type + '-bowl') ||
+                                   document.getElementById(type + '-sound');
+            
+            statusElement.textContent = 'Failed ❌';
+            statusElement.className = 'status-badge failed';
+            
+            if (containerElement) {
+                containerElement.classList.add('error');
+            }
+            
+            results[type] = 'failed';
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            const workingFiles = Object.keys(results).filter(key => results[key] === 'working');
+            const failedFiles = Object.keys(results).filter(key => results[key] === 'failed');
+            
+            summary.innerHTML = `
+                <p><strong>Working Files:</strong> ${workingFiles.length}/${totalCount}</p>
+                <p><strong>Failed Files:</strong> ${failedFiles.length}/${totalCount}</p>
+                ${workingFiles.length > 0 ? `<p style="color: #10b981;">✅ Working: ${workingFiles.join(', ')}</p>` : ''}
+                ${failedFiles.length > 0 ? `<p style="color: #ef4444;">❌ Failed: ${failedFiles.join(', ')}</p>` : ''}
+            `;
+
+            // Show celebration if all files work
+            if (workingFiles.length === totalCount) {
+                document.getElementById('celebration').classList.add('show');
+            }
+        }
+
+        // Initialize summary
+        setTimeout(updateSummary, 1000);
+    </script>
+</body>
+</html>
