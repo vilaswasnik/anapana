@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Bell System Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .test-button {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .test-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+        .test-button:active {
+            transform: translateY(0);
+        }
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature-list {
+            text-align: left;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        .feature-list li {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 Enhanced Bell System</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9;">No corrupted MP3 files needed! Pure Web Audio + Visual Magic</p>
+        
+        <div style="margin: 30px 0;">
+            <button class="test-button" onclick="testStartBell()">🔔 Start Session Bell</button>
+            <button class="test-button" onclick="testEndBell()">🎉 End Session Bell</button>
+            <button class="test-button" onclick="testIntervalBell()">🎋 Interval Bell</button>
+        </div>
+        
+        <div class="status" id="status">
+            <h3>🚀 System Status</h3>
+            <p>Initializing enhanced bell system...</p>
+        </div>
+        
+        <div class="status" style="margin-top: 20px;">
+            <h3>✨ Enhanced Features</h3>
+            <ul class="feature-list">
+                <li>🎵 <strong>Web Audio API</strong> - Clean synthetic bell tones</li>
+                <li>🎨 <strong>Visual Animations</strong> - Full-screen beautiful overlays</li>
+                <li>📊 <strong>Frequency Bars</strong> - Audio visualization effects</li>
+                <li>💫 <strong>Enhanced Ripples</strong> - Larger, more dramatic effects</li>
+                <li>🌈 <strong>Gradient Effects</strong> - Modern visual design</li>
+                <li>⚡ <strong>No Files Needed</strong> - Everything generated in real-time</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="enhanced-bells.js"></script>
+    <script>
+        let enhancedBells;
+        
+        // Initialize enhanced bell system
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                enhancedBells = new EnhancedBellSystem();
+                updateStatus('success', '✅ Enhanced Bell System Ready!', 'All systems operational. Web Audio + Visual effects loaded successfully.');
+            } catch (error) {
+                updateStatus('error', '❌ System Error', `Failed to initialize: ${error.message}`);
+            }
+        });
+        
+        function testStartBell() {
+            if (enhancedBells) {
+                enhancedBells.showBell('start');
+                updateStatus('success', '🔔 Start Bell Triggered!', 'You should see a green full-screen overlay with synthetic bell sound and enhanced animations.');
+            }
+        }
+        
+        function testEndBell() {
+            if (enhancedBells) {
+                enhancedBells.showBell('end');
+                updateStatus('success', '🎉 End Bell Triggered!', 'Purple overlay with celebration effects and completion sound.');
+            }
+        }
+        
+        function testIntervalBell() {
+            if (enhancedBells) {
+                enhancedBells.showBell('interval');
+                updateStatus('success', '🎋 Interval Bell Triggered!', 'Yellow mindful moment animation with gentle reminder tone.');
+            }
+        }
+        
+        function updateStatus(type, title, message) {
+            const status = document.getElementById('status');
+            const color = type === 'success' ? '#10b981' : '#ef4444';
+            status.innerHTML = `
+                <h3 style="color: ${color};">${title}</h3>
+                <p>${message}</p>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 15px;">
+                    <em>Look for full-screen overlays with animations, ripples, and frequency bars!</em>
+                </p>
+            `;
+        }
+    </script>
+</body>
+</html>

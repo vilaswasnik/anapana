@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Test - Anapana Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #4f46e5;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+        pre {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔊 Audio System Test</h1>
+    <p>This page will help diagnose audio issues with the meditation timer.</p>
+
+    <div class="test-section">
+        <h2>1. Browser Audio Support Test</h2>
+        <div id="browserSupport" class="status info">Testing browser support...</div>
+        <button onclick="testBrowserSupport()">Test Browser Support</button>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Web Audio API Test</h2>
+        <div id="webAudioStatus" class="status info">Click button to test Web Audio API</div>
+        <button onclick="testWebAudio()">Test Web Audio (Beep)</button>
+        <button onclick="testDifferentFrequencies()">Test Different Tones</button>
+    </div>
+
+    <div class="test-section">
+        <h2>3. HTML5 Audio Test</h2>
+        <div id="html5AudioStatus" class="status info">Testing HTML5 audio fallback</div>
+        <button onclick="testHTML5Audio()">Test HTML5 Audio</button>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Volume Test</h2>
+        <label>Volume: <input type="range" id="volumeSlider" min="0" max="100" value="50" oninput="updateVolume(this.value)"></label>
+        <span id="volumeDisplay">50%</span>
+        <button onclick="testVolumeBeep()">Test Current Volume</button>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Debug Information</h2>
+        <button onclick="showDebugInfo()">Show Debug Info</button>
+        <pre id="debugInfo" style="display: none;"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>6. Go Back to App</h2>
+        <button onclick="window.location.href='index.html'" style="background: #10b981;">Return to Meditation Timer</button>
+    </div>
+
+    <script>
+        let audioContext = null;
+        let currentVolume = 0.5;
+
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testBrowserSupport() {
+            try {
+                // Test Web Audio API
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) {
+                    log('browserSupport', '❌ Web Audio API not supported', 'error');
+                    return;
+                }
+
+                // Test HTML5 Audio
+                const audio = new Audio();
+                if (!audio.canPlayType) {
+                    log('browserSupport', '❌ HTML5 Audio not supported', 'error');
+                    return;
+                }
+
+                log('browserSupport', '✅ Browser supports both Web Audio API and HTML5 Audio', 'success');
+                
+            } catch (error) {
+                log('browserSupport', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function testWebAudio() {
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                
+                if (!audioContext) {
+                    audioContext = new AudioContextClass();
+                }
+
+                // Resume context if suspended (browser autoplay policy)
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        log('webAudioStatus', '✅ Audio context resumed, playing beep...', 'info');
+                        playBeep(800, 0.5);
+                    });
+                } else {
+                    log('webAudioStatus', '✅ Playing 800Hz beep for 0.5 seconds...', 'success');
+                    playBeep(800, 0.5);
+                }
+
+            } catch (error) {
+                log('webAudioStatus', `❌ Web Audio Error: ${error.message}`, 'error');
+            }
+        }
+
+        function playBeep(frequency, duration) {
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(currentVolume * 0.3, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+                
+                return true;
+            } catch (error) {
+                console.error('Beep error:', error);
+                return false;
+            }
+        }
+
+        function testDifferentFrequencies() {
+            if (!audioContext) {
+                testWebAudio();
+                setTimeout(testDifferentFrequencies, 100);
+                return;
+            }
+
+            log('webAudioStatus', '🎵 Playing sequence: Start (800Hz) → End (600Hz) → Interval (700Hz)', 'info');
+            
+            // Play sequence of different tones
+            setTimeout(() => playBeep(800, 0.8), 0);      // Start bell
+            setTimeout(() => playBeep(600, 0.8), 1000);   // End bell  
+            setTimeout(() => playBeep(700, 0.8), 2000);   // Interval bell
+        }
+
+        function testHTML5Audio() {
+            try {
+                // Create a data URL for a simple beep sound
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const sampleRate = audioContext.sampleRate;
+                const duration = 0.5;
+                const samples = sampleRate * duration;
+                const buffer = audioContext.createBuffer(1, samples, sampleRate);
+                const data = buffer.getChannelData(0);
+
+                // Generate a simple sine wave
+                for (let i = 0; i < samples; i++) {
+                    data[i] = Math.sin(2 * Math.PI * 800 * i / sampleRate) * 0.3;
+                }
+
+                const source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioContext.destination);
+                source.start();
+
+                log('html5AudioStatus', '✅ HTML5 Audio test completed', 'success');
+
+            } catch (error) {
+                log('html5AudioStatus', `❌ HTML5 Audio Error: ${error.message}`, 'error');
+            }
+        }
+
+        function updateVolume(value) {
+            currentVolume = value / 100;
+            document.getElementById('volumeDisplay').textContent = value + '%';
+        }
+
+        function testVolumeBeep() {
+            if (!audioContext) {
+                testWebAudio();
+                setTimeout(testVolumeBeep, 100);
+                return;
+            }
+            
+            log('webAudioStatus', `🔊 Testing volume at ${Math.round(currentVolume * 100)}%`, 'info');
+            playBeep(800, 0.5);
+        }
+
+        function showDebugInfo() {
+            const debugElement = document.getElementById('debugInfo');
+            
+            let info = `Browser: ${navigator.userAgent}\n\n`;
+            info += `Audio Context Support: ${!!(window.AudioContext || window.webkitAudioContext)}\n`;
+            info += `HTML5 Audio Support: ${!!window.Audio}\n\n`;
+            
+            if (audioContext) {
+                info += `Audio Context State: ${audioContext.state}\n`;
+                info += `Audio Context Sample Rate: ${audioContext.sampleRate}\n`;
+                info += `Audio Context Current Time: ${audioContext.currentTime}\n\n`;
+            }
+            
+            info += `Current Volume: ${Math.round(currentVolume * 100)}%\n`;
+            info += `Page Protocol: ${window.location.protocol}\n`;
+            info += `Page Origin: ${window.location.origin}\n\n`;
+            
+            // Check for common audio blocking extensions
+            info += `Potential Audio Blockers:\n`;
+            info += `- Ad blockers may block audio\n`;
+            info += `- Browser security settings\n`;
+            info += `- Corporate/school network restrictions\n`;
+            info += `- System audio drivers\n`;
+            
+            debugElement.textContent = info;
+            debugElement.style.display = 'block';
+        }
+
+        // Auto-run browser support test
+        window.addEventListener('load', testBrowserSupport);
+        
+        // Add click handler to document to help with autoplay policy
+        document.addEventListener('click', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>

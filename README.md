@@ -1,192 +1,288 @@
-# Anapana Meditation Guide
+# 🧘 Anapana Meditation Timer
 
-A comprehensive guide to Anapana-sati (mindfulness of breathing), a foundational meditation technique for developing concentration, mindfulness, and inner peace.
+[![Deploy to GitHub Pages](https://github.com/vilaswasnik/anapana/workflows/Deploy%20Anapana%20Meditation%20Timer%20to%20GitHub%20Pages/badge.svg)](https://github.com/vilaswasnik/anapana/actions)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-🧘%20Try%20Now-brightgreen)](https://vilaswasnik.github.io/anapana/)
 
-## Table of Contents
+> **🌐 Live Demo:** [https://vilaswasnik.github.io/anapana/](https://vilaswasnik.github.io/anapana/)
 
-- [What is Anapana Meditation?](#what-is-anapana-meditation)
-- [Benefits of Anapana](#benefits-of-anapana)
-- [How to Practice](#how-to-practice)
-- [Getting Started](#getting-started)
-- [Common Challenges](#common-challenges)
-- [Tips for Success](#tips-for-success)
-- [Additional Resources](#additional-resources)
+A comprehensive digital meditation timer specifically designed for **Anapana meditation practice** - the ancient Buddhist technique of mindfulness of breathing taught by Buddha and preserved in the Vipassana tradition.
 
-## What is Anapana Meditation?
+## 🌟 Features
 
-Anapana is derived from **"Anapana-sati,"** a Pali term meaning **"mindfulness of breathing."** This ancient meditation technique, taught by the Buddha over 2,500 years ago, involves observing the natural breath as it enters and leaves the nostrils without attempting to control or modify it.
+### Core Timer Functionality
+- ⏱️ **Precision Timer** - Accurate countdown with visual progress ring
+- ▶️ **Play/Pause/Reset** - Full timer control with keyboard shortcuts
+- 🎯 **Quick Presets** - 5, 10, 15, 20, 30, and 45-minute sessions
+- ⚙️ **Custom Duration** - Set any custom time with minutes and seconds
+- 🔄 **Background Operation** - Continues running when app is minimized
 
-Anapana serves as:
-- An introduction to mindfulness and meditation
-- A foundation for deeper practices like Vipassana
-- A standalone practice for developing concentration
-- A calming technique suitable for all ages
+### Audio Features
+- 🔔 **Meditation Bells** - Start, end, and interval bells with multiple sound options
+  - Tibetan Bell
+  - Singing Bowl
+  - Soft Chime
+  - Temple Gong
+  - **Fallback System**: Synthesized bell sounds if audio files are missing
+- 🌊 **Ambient Sounds** - Optional background sounds during meditation
+  - Forest sounds
+  - Rain
+  - Ocean waves
+  - White noise
+- 🔊 **Volume Control** - Adjustable volume for all audio elements
+- 🔕 **Silent Mode** - Option to disable all sounds
+- ⚡ **Smart Audio Handling** - Graceful fallback when audio files are unavailable
 
-## Benefits of Anapana
+### Progress Tracking & Analytics
+- 📊 **Session Statistics** - Track total sessions, minutes, and streaks
+- 📈 **Weekly Progress** - Visual chart of daily practice
+- 🏆 **Achievement System** - Streak tracking and milestone celebrations
+- 💾 **Data Persistence** - All data saved locally in browser
+- 📤 **Export/Import** - Backup and restore your meditation data
+- 📱 **Daily Reminders** - Customizable notification reminders
 
-### Mental Benefits
-- **Increased Concentration**: Develops sustained attention and mental clarity
-- **Stress Reduction**: Calms the mind and reduces anxiety
-- **Emotional Balance**: Helps regulate emotions and reactions
-- **Better Sleep**: Promotes relaxation and restful sleep
+### User Experience
+- 🎨 **Beautiful Design** - Calming gradients and smooth animations
+- 📱 **Responsive Layout** - Works perfectly on desktop, tablet, and mobile
+- 🌙 **Dark Mode Support** - Automatic dark/light theme detection
+- ♿ **Accessibility** - Full keyboard navigation and screen reader support
+- 🔧 **PWA Support** - Install on any device, works offline
+- ⌨️ **Keyboard Shortcuts** - Space to play/pause, R to reset, ESC to close modals
 
-### Physical Benefits
-- **Lower Blood Pressure**: Regular practice can help reduce hypertension
-- **Improved Breathing**: Enhances natural breathing patterns
-- **Reduced Muscle Tension**: Promotes physical relaxation
-- **Enhanced Immune Function**: Reduces stress-related health issues
+## 🚀 Quick Start
 
-### Spiritual Benefits
-- **Self-Awareness**: Develops insight into the nature of mind
-- **Equanimity**: Cultivates balanced mental states
-- **Preparation for Deeper Practice**: Foundation for Vipassana meditation
-- **Inner Peace**: Develops lasting tranquility
+### Option 1: Direct File Access
+1. Download all files to a local directory
+2. Open `index.html` in your web browser
+3. Start meditating immediately!
 
-## How to Practice
+### Option 2: Local Web Server (Recommended)
+```bash
+# Using Python
+cd app
+python -m http.server 8000
 
-### Setting Up Your Practice Space
-1. **Find a Quiet Place**: Choose a location free from distractions
-2. **Comfortable Seating**: Sit on a cushion, chair, or meditation bench
-3. **Maintain Posture**: Keep your back straight but not rigid
-4. **Close Your Eyes**: Or soften your gaze downward
+# Using Node.js
+cd app
+npx serve
 
-### The Practice Steps
-1. **Settle In**: Take a moment to relax your body and mind
-2. **Find Your Breath**: Bring attention to the area at the entrance of your nostrils
-3. **Observe Naturally**: Notice the sensations of breathing:
-   - Cool air entering on inhalation
-   - Warm air leaving on exhalation
-   - The natural pause between breaths
-4. **Don't Control**: Simply observe without changing your breathing pattern
-5. **Return When Distracted**: Gently bring attention back to the breath when mind wanders
-6. **End Mindfully**: Conclude with a moment of gratitude
+# Using PHP
+cd app
+php -S localhost:8000
+```
+Then open `http://localhost:8000` in your browser.
 
-### Key Points to Remember
-- **No Force**: Never strain or force concentration
-- **Natural Breathing**: Don't control or manipulate your breath
-- **Gentle Return**: When distracted, return to breath without self-judgment
-- **Patience**: Progress comes with consistent practice, not force
+### Option 3: Live Server (VS Code)
+1. Install the "Live Server" extension in VS Code
+2. Right-click on `index.html`
+3. Select "Open with Live Server"
 
-## Getting Started
+## 📱 Installation as PWA
 
-### For Complete Beginners
-- **Duration**: Start with 10-15 minutes daily
-- **Time**: Choose a consistent time (morning or evening work well)
-- **Frequency**: Daily practice is more beneficial than longer, infrequent sessions
-- **Environment**: Same quiet location helps establish routine
+### Desktop (Chrome/Edge/Brave)
+1. Open the app in your browser
+2. Look for the install icon in the address bar
+3. Click "Install" or "Add to desktop"
 
-### Building Your Practice
-- **Week 1-2**: 10-15 minutes daily, focus on establishing habit
-- **Week 3-4**: Gradually increase to 20-25 minutes
-- **Month 2+**: Work toward 30-45 minutes as comfortable
-- **Long-term**: Some practitioners sit for an hour or more
+### Mobile (Android)
+1. Open the app in Chrome
+2. Tap the menu (three dots)
+3. Select "Add to Home screen"
 
-### Creating a Routine
-1. **Set a Regular Time**: Same time each day builds consistency
-2. **Prepare Your Space**: Have your meditation spot ready
-3. **Start Small**: Better to meditate 10 minutes daily than 30 minutes occasionally
-4. **Track Progress**: Use a simple log to maintain motivation
+### Mobile (iOS)
+1. Open the app in Safari
+2. Tap the share button
+3. Select "Add to Home Screen"
 
-## Common Challenges
+## 🎯 Usage Guide
 
-### Mind Wandering
-- **Normal Experience**: Everyone's mind wanders - this is not failure
-- **Gentle Return**: Simply notice and return attention to breath
-- **No Judgment**: Avoid criticizing yourself for distractions
+### Basic Timer Operation
+1. **Set Duration**: Choose a preset or set custom time
+2. **Configure Audio**: Enable/disable bells and ambient sounds
+3. **Start Session**: Click play or press spacebar
+4. **Focus on Breath**: Observe your breathing at the nostrils
+5. **End Mindfully**: Bell will ring when time is complete
 
-### Physical Discomfort
-- **Adjust Posture**: Modify sitting position as needed
-- **Use Support**: Cushions, chairs, or back support are helpful
-- **Gentle Movement**: Small adjustments are acceptable
+### Keyboard Shortcuts
+- `Space` - Play/Pause timer
+- `R` - Reset timer
+- `Esc` - Close any open modal
+- `Tab` - Navigate between elements
 
-### Restlessness or Boredom
-- **Temporary States**: These feelings will pass with practice
-- **Stay Committed**: Continue observing breath despite mental states
-- **Shorter Sessions**: Reduce duration temporarily if needed
+### Settings Options
+- **Bell Sounds**: Choose from 4 different bell types
+- **Ambient Audio**: Optional background sounds
+- **Volume Control**: Adjust all audio levels
+- **Interval Bells**: Optional bells during meditation
+- **Daily Reminders**: Set notification times
+- **Data Management**: Export/import meditation history
 
-### Falling Asleep
-- **Check Posture**: Ensure back is straight
-- **Open Eyes Slightly**: Keep them barely open if drowsiness persists
-- **Different Time**: Try practicing when more alert
+## 📊 Progress Tracking
 
-## Tips for Success
+### Statistics Tracked
+- Total meditation sessions completed
+- Total minutes meditated
+- Current and longest streaks
+- Average session length
+- Weekly practice patterns
+- Recent session history
 
-### Daily Practice
-- **Consistency Over Duration**: 15 minutes daily beats 2 hours weekly
-- **Same Time**: Establish a routine at the same time each day
-- **Preparation**: Have your space ready to minimize setup time
+### Data Storage
+- All data stored locally in browser's localStorage
+- No account required or data sent to servers
+- Export feature creates JSON backup file
+- Import feature restores from backup
 
-### Mental Approach
-- **Be Patient**: Progress is gradual and sometimes imperceptible
-- **No Expectations**: Avoid judging sessions as "good" or "bad"
-- **Gentle Persistence**: Return to practice even after missing days
+## 🔧 Technical Details
 
-### Environmental Factors
-- **Minimize Distractions**: Turn off phones and notifications
-- **Comfortable Temperature**: Neither too hot nor too cold
-- **Fresh Air**: Good ventilation supports alertness
+### Technologies Used
+- **Frontend**: HTML5, CSS3 (CSS Custom Properties), Vanilla JavaScript
+- **PWA**: Service Worker, Web App Manifest
+- **Audio**: HTML5 Audio API
+- **Storage**: LocalStorage API
+- **Notifications**: Web Notifications API
+- **Icons**: Font Awesome 6
 
-### Community Support
-- **Find Others**: Practice with friends or join meditation groups
-- **Teacher Guidance**: Consider learning from experienced instructors
-- **Regular Courses**: Attend retreats or workshops when possible
+### Browser Support
+- Chrome/Chromium 70+
+- Firefox 70+
+- Safari 14+
+- Edge 79+
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Additional Resources
+### Performance
+- Lightweight (~200KB total including CSS and JS)
+- Fast loading with minimal dependencies
+- Efficient timer using requestAnimationFrame
+- Optimized images and assets
 
-### Books
-- "The Art of Living" by S.N. Goenka
-- "Mindfulness in Plain English" by Bhante Henepola Gunaratana
-- "The Mind Illuminated" by Culadasa (John Yates)
+## 🎨 Customization
 
-### Online Resources
-- Dhamma.org - Free Vipassana meditation courses
-- Insight Meditation Society resources
-- Guided meditations and talks
+### Color Themes
+The app uses CSS custom properties for easy theming. Key color variables:
+```css
+:root {
+  --primary-color: #6366f1;      /* Main brand color */
+  --accent-color: #10b981;       /* Success/completion color */
+  --text-primary: #1f2937;       /* Main text */
+  --bg-primary: #ffffff;         /* Background */
+}
+```
 
-### Apps and Digital Tools
+### Audio Files
+Replace audio files in the `/sounds/` directory:
+- `tibetan-bell.mp3` - Default meditation bell
+- `singing-bowl.mp3` - Alternative bell sound
+- `soft-chime.mp3` - Gentle chime option
+- `temple-gong.mp3` - Deep gong sound
+- `forest.mp3` - Forest ambient sounds
+- `rain.mp3` - Rain ambient sounds
+- `ocean.mp3` - Ocean wave sounds
+- `white-noise.mp3` - White noise
 
-#### Meditation Timer Apps
-- **Insight Timer** - Free app with customizable meditation timers, bells, and large community
-- **Enso** - Minimalist meditation timer with beautiful chimes and session tracking
-- **Meditation Assistant** - Simple timer with progress statistics and flexible scheduling
-- **Buddhify** - Meditation for different situations with some breath-focused sessions
-- **Timer Plus** - Basic interval timer good for structured breathing practices
+### Adding New Features
+The modular JavaScript structure makes it easy to add new features:
+- Timer logic is in the `MeditationTimer` class
+- Notifications handled by `NotificationManager`
+- Audio management integrated in main class
+- Data persistence methods are clearly separated
 
-#### Guided Meditation Apps
-- **Headspace** - Beginner-friendly with some mindfulness of breathing courses
-- **Calm** - Daily meditation sessions including breath awareness practices  
-- **Ten Percent Happier** - Practical meditation app with expert teachers
-- **Waking Up** - Advanced mindfulness training with theory and practice
-- **Plum Village** - Free app with guided meditations in Thich Nhat Hanh's tradition
+## 🐛 Troubleshooting
 
-#### Progress Tracking Tools
-- **Meditation tracking in Apple Health/Google Fit** - Log sessions automatically
-- **Habit tracking apps** (Habitica, Streaks, Way of Life) - Build consistency
-- **Simple journal apps** - Track insights and progress notes
-- **Calendar blocking** - Schedule and protect meditation time
-- **Meditation journals** - Physical notebooks for deeper reflection
+### Audio Not Playing
+- **Fallback System Active**: App automatically uses synthesized bell sounds if audio files are missing
+- Check browser autoplay policies
+- Try starting timer to enable audio context
+- **Add Real Audio Files**: Place MP3 files in `/sounds/` folder:
+  - `tibetan-bell.mp3`, `singing-bowl.mp3`, `soft-chime.mp3`, `temple-gong.mp3`
+- Check volume settings in app
 
-#### Specialized Anapana Resources
-- **Audio dharma talks** on breath meditation from Buddhist centers
-- **YouTube channels** with Anapana instruction (search "Anapana Sati" or "Mindfulness of Breathing")
-- **Podcast episodes** on breath meditation techniques
-- **Online Sangha groups** for virtual meditation sitting and discussion
+### Timer Not Accurate
+- Browser may throttle timers in background tabs
+- Use the PWA installed version for best performance
+- Check if other extensions are interfering
 
-#### Creating Your Digital Practice Setup
-1. **Choose one timer app** - Avoid app-switching during practice periods
-2. **Set up progress tracking** - Pick one method and stick with it consistently  
-3. **Download offline content** - Ensure guided sessions work without internet
-4. **Customize notifications** - Set gentle daily reminders for practice time
-5. **Create a phone-free zone** - Consider airplane mode during longer sessions
+### Data Lost
+- Export data regularly as backup
+- Check if localStorage is enabled
+- Ensure browser isn't clearing data
+- Use private/incognito mode testing
+
+### PWA Not Installing
+- Ensure HTTPS connection (or localhost)
+- Check manifest.json is accessible
+- Verify service worker is registered
+- Try force refresh (Ctrl+F5)
+
+## 🚀 Deployment
+
+### GitHub Pages (Live Demo)
+This app is automatically deployed to GitHub Pages:
+- **Live URL:** [https://vilaswasnik.github.io/anapana/](https://vilaswasnik.github.io/anapana/)
+- **Auto-deployment** on every push to main branch
+- **HTTPS enabled** for PWA functionality
+- **Custom domain** support available
+
+### Local Development
+```bash
+# Clone the repository
+git clone https://github.com/vilaswasnik/anapana.git
+cd anapana
+
+# Start local server
+python3 -m http.server 8000
+# or
+npx serve .
+
+# Visit http://localhost:8000
+```
+
+### Deploy Anywhere
+The app is a static web application that can be deployed to:
+- **GitHub Pages** (current setup)
+- **Netlify** - Drag and drop deployment
+- **Vercel** - Git integration
+- **Firebase Hosting** - Google's platform
+- **Any web server** - Just upload files
+
+## 🤝 Contributing
+
+This is an open-source project! Ways to contribute:
+
+### Bug Reports
+- Use GitHub issues for bug reports
+- Include browser version and steps to reproduce
+- Screenshots helpful for UI issues
+
+### Feature Requests
+- Suggest new meditation features
+- UI/UX improvements
+- Audio enhancements
+- Analytics additions
+
+### Code Contributions
+- Fork the repository
+- Create feature branch
+- Follow existing code style
+- Test thoroughly before PR
+
+## 📄 License
+
+MIT License - Feel free to use, modify, and distribute.
+
+## 🙏 Acknowledgments
+
+- **Buddhist Tradition** - For the ancient Anapana meditation technique
+- **S.N. Goenka** - For popularizing Vipassana and Anapana practice
+- **Open Source Community** - For the tools and libraries used
+
+## 📞 Support
+
+- 📧 Create an issue on GitHub for bugs/features
+- 📖 Check the documentation for common questions
+- 🧘‍♂️ Enjoy your meditation practice!
 
 ---
 
-*Remember: Anapana is a simple yet profound practice. The key is regular, patient practice rather than trying to achieve special experiences. Allow the natural benefits to unfold gradually through consistent observation of the breath.*
+*"The mind is everything. What you think you become." - Buddha*
 
-## Contributing
-
-If you'd like to contribute to this guide or share your experiences with Anapana meditation, please feel free to submit suggestions or improvements.
-
----
-
-**Disclaimer**: This guide is for educational purposes. If you have serious mental health concerns, please consult with healthcare professionals before beginning meditation practice.
+**May this tool support your journey toward inner peace and mindfulness.** 🕉️
