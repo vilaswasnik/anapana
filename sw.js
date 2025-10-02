@@ -1,18 +1,12 @@
 // Service Worker for Anapana Meditation Timer PWA
-const CACHE_NAME = 'anapana-timer-v1';
+const CACHE_NAME = 'anapana-timer-nuclear-v1';
 const urlsToCache = [
     '/',
     '/index.html',
     '/styles.css',
     '/script.js',
-    '/sounds/tibetan-bell.mp3',
-    '/sounds/singing-bowl.mp3',
-    '/sounds/soft-chime.mp3',
-    '/sounds/temple-gong.mp3',
-    '/sounds/forest.mp3',
-    '/sounds/rain.mp3',
-    '/sounds/ocean.mp3',
-    '/sounds/white-noise.mp3',
+    '/sounds/wooden-bell.wav',
+    '/sounds/ambient/meditate1.mp3',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap'
 ];

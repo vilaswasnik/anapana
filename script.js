@@ -1,5 +1,52 @@
 // ===== MEDITATION TIMER APP - CORE FUNCTIONALITY =====
 
+// NUCLEAR RESET - Clear everything and force clean start
+(function() {
+    console.log('� NUCLEAR RESET - Clearing everything...');
+    
+    // Clear ALL possible storage
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Clear all caches aggressively
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            names.forEach(name => {
+                caches.delete(name);
+                console.log('🗑️ Nuked cache:', name);
+            });
+        });
+    }
+    
+    // Unregister all service workers
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister();
+                console.log('🗑️ Unregistered SW:', registration.scope);
+            }
+        });
+    }
+    
+    // Force override any existing settings immediately
+    const cleanSettings = {
+        version: 99,
+        bellSound: 'wooden',
+        startBell: true,
+        endBell: true,
+        intervalBell: false,
+        intervalMinutes: 5,
+        ambientSounds: true,
+        ambientType: 'meditate1',
+        volume: 70,
+        dailyReminder: false,
+        reminderTime: '07:00'
+    };
+    
+    localStorage.setItem('meditationSettings', JSON.stringify(cleanSettings));
+    console.log('✅ NUCLEAR RESET COMPLETE - Only wooden-bell.wav and meditate1.mp3 will be used');
+})();
+
 class MeditationTimer {
     constructor() {
         this.isRunning = false;
@@ -9,6 +56,9 @@ class MeditationTimer {
         this.intervalId = null;
         this.startTime = null;
         this.pausedTime = 0;
+        
+        // Clear any old settings that might reference missing files
+        this.clearOldSettings();
         
         // Audio elements with error handling
         this.audioContext = null;
@@ -36,22 +86,25 @@ class MeditationTimer {
     }
     
     initializeApp() {
-        // Initialize default settings
-        if (!this.settings.bellSound) {
-            this.settings = {
-                bellSound: 'tibetan',
-                startBell: true,
-                endBell: true,
-                intervalBell: false,
-                intervalMinutes: 5,
-                ambientSounds: false,
-                ambientType: 'none',
-                volume: 70,
-                dailyReminder: false,
-                reminderTime: '07:00'
-            };
-            this.saveSettings();
-        }
+        // Clean up any old settings that reference missing files
+        this.cleanupSettings();
+        
+        // FORCE clean settings - no matter what was saved before
+        this.settings = {
+            version: 99,
+            bellSound: 'wooden',
+            startBell: true,
+            endBell: true,
+            intervalBell: false,
+            intervalMinutes: 5,
+            ambientSounds: true,
+            ambientType: 'meditate1',
+            volume: 70,
+            dailyReminder: false,
+            reminderTime: '07:00'
+        };
+        this.saveSettings();
+        console.log('🔒 FORCED clean settings: Wooden Bell + Meditation Music ONLY');
         
         // Initialize stats
         if (!this.stats.totalSessions) {
@@ -243,7 +296,7 @@ class MeditationTimer {
     }
     
     toggleTimer() {
-        if (!this.isRunning) {
+        if (!this.isRunning || this.isPaused) {
             this.startTimer();
         } else {
             this.pauseTimer();
@@ -251,7 +304,25 @@ class MeditationTimer {
     }
     
     startTimer() {
-        if (!this.isRunning) {
+        if (this.isPaused) {
+            // Resume from pause
+            this.isPaused = false;
+            this.startTime = Date.now() - this.pausedTime;
+            
+            // Re-enable visual timer activity
+            this.visualBells.setTimerActive(true);
+            
+            this.intervalId = setInterval(() => {
+                this.tick();
+            }, 1000);
+            
+            if (this.settings.ambientSounds && this.settings.ambientType !== 'none') {
+                this.ambientAudio.play();
+            }
+            
+            this.updatePlayPauseButton();
+        } else if (!this.isRunning) {
+            // Start fresh timer
             this.isRunning = true;
             this.isPaused = false;
             this.startTime = Date.now() - this.pausedTime;
@@ -272,22 +343,6 @@ class MeditationTimer {
             this.intervalId = setInterval(() => {
                 this.tick();
             }, 1000);
-            
-            this.updatePlayPauseButton();
-        } else if (this.isPaused) {
-            this.isPaused = false;
-            this.startTime = Date.now() - this.pausedTime;
-            
-            // Re-enable visual timer activity
-            this.visualBells.setTimerActive(true);
-            
-            this.intervalId = setInterval(() => {
-                this.tick();
-            }, 1000);
-            
-            if (this.settings.ambientSounds && this.settings.ambientType !== 'none') {
-                this.ambientAudio.play();
-            }
             
             this.updatePlayPauseButton();
         }
@@ -449,31 +504,56 @@ class MeditationTimer {
     }
     
     setPresetTime(minutes) {
-        if (!this.isRunning) {
-            this.totalSeconds = minutes * 60;
+        // Allow time changes even during meditation
+        const wasRunning = this.isRunning && !this.isPaused;
+        
+        this.totalSeconds = minutes * 60;
+        
+        // If we're extending time beyond current remaining time, add the difference
+        // If we're reducing time, set current time to new total if it exceeds it
+        if (this.isRunning || this.isPaused) {
+            // Keep the current elapsed time but adjust total
+            const elapsedSeconds = this.totalSeconds - this.currentSeconds;
+            this.currentSeconds = Math.max(0, this.totalSeconds - elapsedSeconds);
+        } else {
+            // Fresh start - set current to total
             this.currentSeconds = this.totalSeconds;
-            this.updateDisplay();
-            this.updateProgressRing();
-            
-            // Update active preset button
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[data-time="${minutes}"]`).classList.add('active');
+        }
+        
+        this.updateDisplay();
+        this.updateProgressRing();
+        
+        // Update active preset button
+        document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+        const presetBtn = document.querySelector(`[data-time="${minutes}"]`);
+        if (presetBtn) {
+            presetBtn.classList.add('active');
         }
     }
     
     setCustomTime() {
-        if (!this.isRunning) {
-            const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
-            const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
-            
-            this.totalSeconds = (minutes * 60) + seconds;
+        // Allow custom time changes even during meditation
+        const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+        const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+        
+        this.totalSeconds = (minutes * 60) + seconds;
+        
+        // If we're extending time beyond current remaining time, add the difference
+        // If we're reducing time, set current time to new total if it exceeds it
+        if (this.isRunning || this.isPaused) {
+            // Keep the current elapsed time but adjust total
+            const elapsedSeconds = this.totalSeconds - this.currentSeconds;
+            this.currentSeconds = Math.max(0, this.totalSeconds - elapsedSeconds);
+        } else {
+            // Fresh start - set current to total
             this.currentSeconds = this.totalSeconds;
-            this.updateDisplay();
-            this.updateProgressRing();
-            
-            // Clear active preset
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
         }
+        
+        this.updateDisplay();
+        this.updateProgressRing();
+        
+        // Clear active preset since this is custom time
+        document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
     }
     
     updateDisplay() {
@@ -601,14 +681,7 @@ class MeditationTimer {
     }
     
     updateBellSounds() {
-        const soundMap = {
-            'tibetan': 'sounds/tibetan-bell.wav',
-            'singing-bowl': 'sounds/singing-bowl.wav',
-            'chime': 'sounds/soft-chime.wav',
-            'gong': 'sounds/temple-gong.wav'
-        };
-        
-        const soundFile = soundMap[this.settings.bellSound] || soundMap['tibetan'];
+        const soundFile = 'sounds/wooden-bell.wav';
         
         if (this.startBell) this.startBell.src = soundFile;
         if (this.endBell) this.endBell.src = soundFile;
@@ -616,21 +689,20 @@ class MeditationTimer {
     }
     
     updateAmbientSounds() {
-        const soundMap = {
-            'forest': 'sounds/forest.wav',
-            'rain': 'sounds/rain.wav',
-            'ocean': 'sounds/ocean.wav',
-            'white-noise': 'sounds/white-noise.wav'
-        };
-        
-        const soundFile = soundMap[this.settings.ambientType];
-        
-        if (soundFile && this.ambientAudio) {
-            this.ambientAudio.src = soundFile;
+        if (this.settings.ambientType === 'meditate1' && this.ambientAudio) {
+            this.ambientAudio.src = 'sounds/ambient/meditate1.mp3';
+            this.ambientAudio.loop = true;
         }
     }
     
     loadSettings() {
+        // Ensure only valid sounds are used
+        this.settings.bellSound = 'wooden';
+        if (!['none', 'meditate1'].includes(this.settings.ambientType)) {
+            this.settings.ambientType = 'meditate1';
+        }
+        this.saveSettings();
+        
         // Bell settings
         document.getElementById('startBellCheck').checked = this.settings.startBell;
         document.getElementById('endBellCheck').checked = this.settings.endBell;
@@ -833,6 +905,28 @@ class MeditationTimer {
         localStorage.setItem('meditationSettings', JSON.stringify(this.settings));
     }
     
+    cleanupSettings() {
+        if (this.settings.bellSound !== 'wooden') {
+            this.settings.bellSound = 'wooden';
+        }
+        if (!['none', 'meditate1'].includes(this.settings.ambientType)) {
+            this.settings.ambientType = 'meditate1';
+        }
+        this.saveSettings();
+    }
+    
+    clearOldSettings() {
+        const oldSettings = JSON.parse(localStorage.getItem('meditationSettings') || '{}');
+        
+        if (oldSettings.bellSound && oldSettings.bellSound !== 'wooden') {
+            localStorage.removeItem('meditationSettings');
+        }
+        
+        if (oldSettings.ambientType && !['none', 'meditate1'].includes(oldSettings.ambientType)) {
+            localStorage.removeItem('meditationSettings');
+        }
+    }
+    
     checkAudioStatus() {
         // Check if any audio files failed to load or if we're using fallback
         const hasAudioIssues = this.useFallbackAudio || 
@@ -860,17 +954,17 @@ class MeditationTimer {
                     <h3>Missing Audio Files</h3>
                     <p>The app is currently using synthesized bell sounds because audio files are not available.</p>
                     
-                    <h3>To Add Real Bell Sounds:</h3>
+                    <h3>Available Sounds:</h3>
+                    <ul>
+                        <li>✅ Wooden Bell - Available</li>
+                        <li>✅ Meditation Music - Available</li>
+                    </ul>
+                    
+                    <h3>To Add More Bell Sounds:</h3>
                     <ol>
-                        <li>Download meditation bell audio files (MP3 format)</li>
-                        <li>Place them in the <code>sounds/</code> folder with these names:
-                            <ul>
-                                <li><code>tibetan-bell.mp3</code></li>
-                                <li><code>singing-bowl.mp3</code></li>
-                                <li><code>soft-chime.mp3</code></li>
-                                <li><code>temple-gong.mp3</code></li>
-                            </ul>
-                        </li>
+                        <li>Download meditation bell audio files (MP3 or WAV format)</li>
+                        <li>Place them in the <code>sounds/</code> folder</li>
+                        <li>Update the sound options in the settings</li>
                         <li>Refresh the page</li>
                     </ol>
                     

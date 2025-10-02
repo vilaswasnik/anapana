@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reset Anapana Sound Settings</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 50px; max-width: 800px; margin: 0 auto; }
+        .btn { padding: 15px 30px; font-size: 16px; margin: 10px; cursor: pointer; }
+        .primary { background: #6366f1; color: white; border: none; border-radius: 8px; }
+        .secondary { background: #e5e7eb; color: #374151; border: none; border-radius: 8px; }
+        .success { color: green; margin: 20px; padding: 20px; background: #f0f9ff; border-radius: 8px; }
+        .info { background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .dropdown-preview { background: white; border: 1px solid #ccc; padding: 10px; margin: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Anapana Sound Settings Fix</h1>
+    
+    <div class="info">
+        <h3>What should you see in the settings:</h3>
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <div>
+                <strong>Bell Sounds:</strong>
+                <select class="dropdown-preview">
+                    <option>Wooden Bell</option>
+                </select>
+            </div>
+            <div>
+                <strong>Ambient Sounds:</strong>
+                <select class="dropdown-preview">
+                    <option>None</option>
+                    <option>Meditation Music</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <p><strong>This will ensure only available sounds are shown in the settings.</strong></p>
+    
+    <button class="btn primary" onclick="resetSettings()">1. Reset All Settings & Cache</button>
+    <button class="btn secondary" onclick="forceRefresh()">2. Force Refresh Browser</button>
+    <button class="btn primary" onclick="goToApp()">3. Go to Clean App</button>
+    
+    <div id="status"></div>
+    
+    <div class="info">
+        <h3>Available Sound Files:</h3>
+        <p>✅ <code>/sounds/wooden-bell.wav</code> - Bell sound</p>
+        <p>✅ <code>/sounds/ambient/meditate1.mp3</code> - Ambient music</p>
+        <p>❌ All other sound files have been removed</p>
+    </div>
+    
+    <script>
+        function resetSettings() {
+            // Clear all meditation-related localStorage
+            localStorage.removeItem('meditationSettings');
+            localStorage.removeItem('meditationSessions');
+            localStorage.removeItem('meditationStats');
+            localStorage.removeItem('audioNotificationDismissed');
+            
+            // Clear ALL caches
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(name => {
+                        caches.delete(name);
+                        console.log('Deleted cache:', name);
+                    });
+                });
+            }
+            
+            // Clear service worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+            }
+            
+            document.getElementById('status').innerHTML = 
+                '<div class="success">✅ Step 1 Complete!<br>' +
+                '• All settings cleared<br>' +
+                '• All caches deleted<br>' +
+                '• Service worker unregistered<br><br>' +
+                '<strong>Now click "Force Refresh Browser"</strong></div>';
+        }
+        
+        function forceRefresh() {
+            document.getElementById('status').innerHTML = 
+                '<div class="success">✅ Step 2: Forcing browser refresh...<br>' +
+                'This will reload with fresh files.</div>';
+            
+            // Force reload without cache
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+        }
+        
+        function goToApp() {
+            // Open in new tab to ensure fresh load
+            window.open('/index.html?v=' + Date.now(), '_blank');
+        }
+        
+        // Show current localStorage status
+        window.onload = function() {
+            const settings = localStorage.getItem('meditationSettings');
+            if (settings) {
+                const parsed = JSON.parse(settings);
+                document.getElementById('status').innerHTML = 
+                    '<div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">' +
+                    '⚠️ <strong>Old settings detected:</strong><br>' +
+                    'Bell Sound: ' + (parsed.bellSound || 'unknown') + '<br>' +
+                    'Ambient Type: ' + (parsed.ambientType || 'unknown') + '<br>' +
+                    '<strong>Click "Reset All Settings" to fix this.</strong></div>';
+            } else {
+                document.getElementById('status').innerHTML = 
+                    '<div style="background: #dcfce7; padding: 15px; border-radius: 8px; margin: 20px 0;">' +
+                    '✅ <strong>No old settings found!</strong><br>' +
+                    'You can go directly to the app.</div>';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Clear Cache & Restart</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 50px; 
+            text-align: center; 
+            background: #1a1a2e;
+            color: white;
+        }
+        .btn { 
+            padding: 20px 40px; 
+            font-size: 18px; 
+            margin: 20px; 
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background: #6366f1;
+            color: white;
+        }
+        .btn:hover { background: #5b21b6; }
+        .status { 
+            margin: 30px; 
+            padding: 20px; 
+            border-radius: 10px;
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧹 Complete Cache Clear</h1>
+    <p>This will force your browser to load the fresh version with only available sounds.</p>
+    
+    <button class="btn" onclick="clearEverything()">Clear All Cache & Restart</button>
+    
+    <div id="status"></div>
+    
+    <script>
+        function clearEverything() {
+            document.getElementById('status').innerHTML = '<div class="status">🔄 Clearing everything...</div>';
+            
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Clear sessionStorage  
+            sessionStorage.clear();
+            
+            // Clear all caches
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    return Promise.all(
+                        names.map(name => caches.delete(name))
+                    );
+                }).then(() => {
+                    console.log('All caches cleared');
+                });
+            }
+            
+            // Unregister service workers
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+            }
+            
+            document.getElementById('status').innerHTML = 
+                '<div class="status">✅ Everything cleared!<br>Redirecting to fresh app...</div>';
+            
+            // Force redirect with cache busting
+            setTimeout(() => {
+                window.location.href = '/index.html?clear=true&v=' + Date.now();
+            }, 2000);
+        }
+        
+        // Auto-run if accessed with clear parameter
+        if (window.location.search.includes('auto=true')) {
+            clearEverything();
+        }
+    </script>
+</body>
+</html>

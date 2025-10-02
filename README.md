@@ -42,8 +42,8 @@ Just click here: **[Start Meditating Now →](https://vilaswasnik.github.io/anap
 
 ### 🔔 **Beautiful Sounds**
 ```
-🎵 Gentle bells: Tibetan, Singing Bowl, Chime, Gong
-🌊 Calming backgrounds: Rain, Ocean, Forest, White Noise  
+🎵 Bell sound: Wooden Bell
+🌊 Ambient sound: Meditation Music  
 🔊 Perfect volume: Adjust to your preference
 🔇 Silent mode: Visual-only meditation
 ```
@@ -73,7 +73,7 @@ Just click here: **[Start Meditating Now →](https://vilaswasnik.github.io/anap
    *Start with 5-10 minutes if you're new*
 
 2. **🔔 Pick Your Bell**  
-   *Try "Tibetan Bell" - it's perfect for beginners*
+   *The wooden bell sound is perfect for beginners*
 
 3. **▶️ Press Play**  
    *Close your eyes and get comfortable*
@@ -145,7 +145,7 @@ Just click here: **[Start Meditating Now →](https://vilaswasnik.github.io/anap
 <details>
 <summary><strong>🔰 I'm new to meditation. Where do I start?</strong></summary>
 
-Start with just 5 minutes using the "Tibetan Bell" sound. Sit comfortably, close your eyes, and simply notice your breath at your nostrils. When your mind wanders (it will!), gently return to your breath. That's it!
+Start with just 5 minutes using the wooden bell sound. Sit comfortably, close your eyes, and simply notice your breath at your nostrils. When your mind wanders (it will!), gently return to your breath. That's it!
 
 </details>
 

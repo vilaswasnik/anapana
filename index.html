@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anapana Meditation Timer</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=clean">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Anapana Timer">
@@ -190,10 +193,7 @@
                 <div class="setting-group">
                     <h3>Bell Sounds</h3>
                     <select id="bellSoundSelect" class="setting-select">
-                        <option value="tibetan">Tibetan Bell</option>
-                        <option value="singing-bowl">Singing Bowl</option>
-                        <option value="chime">Soft Chime</option>
-                        <option value="gong">Temple Gong</option>
+                        <option value="wooden" selected>Wooden Bell</option>
                     </select>
                     <button id="testBellBtn" class="test-btn">Test Sound</button>
                 </div>
@@ -207,10 +207,7 @@
                     </label>
                     <select id="ambientSoundSelect" class="setting-select" disabled>
                         <option value="none">None</option>
-                        <option value="forest">Forest</option>
-                        <option value="rain">Rain</option>
-                        <option value="ocean">Ocean Waves</option>
-                        <option value="white-noise">White Noise</option>
+                        <option value="meditate1" selected>Meditation Music</option>
                     </select>
                 </div>
 
@@ -314,19 +311,19 @@
 
     <!-- Audio Elements -->
     <audio id="startBellAudio" preload="auto">
-        <source src="sounds/tibetan-bell.mp3" type="audio/mpeg">
+        <source src="sounds/wooden-bell.wav" type="audio/wav">
     </audio>
     <audio id="endBellAudio" preload="auto">
-        <source src="sounds/tibetan-bell.mp3" type="audio/mpeg">
+        <source src="sounds/wooden-bell.wav" type="audio/wav">
     </audio>
     <audio id="intervalBellAudio" preload="auto">
-        <source src="sounds/soft-chime.mp3" type="audio/mpeg">
+        <source src="sounds/wooden-bell.wav" type="audio/wav">
     </audio>
     <audio id="ambientAudio" preload="auto" loop>
-        <source src="sounds/forest.mp3" type="audio/mpeg">
+        <source src="sounds/ambient/meditate1.mp3" type="audio/mpeg">
     </audio>
 
-    <script src="script.js"></script>
-    <script src="enhanced-bells.js"></script>
+    <script src="script.js?v=clean"></script>
+    <script src="enhanced-bells.js?v=clean"></script>
 </body>
 </html>

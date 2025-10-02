@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🚀 NUCLEAR CACHE CLEAR</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 50px; 
+            text-align: center; 
+            background: #0f0f23;
+            color: #00ff00;
+            font-size: 18px;
+        }
+        .btn { 
+            padding: 20px 40px; 
+            font-size: 20px; 
+            margin: 20px; 
+            cursor: pointer;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: #1a1a2e;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .btn:hover { 
+            background: #00ff00; 
+            color: #0f0f23;
+        }
+        .status { 
+            margin: 30px; 
+            padding: 20px; 
+            border-radius: 10px;
+            background: #1a472a;
+            border: 2px solid #00ff00;
+        }
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <h1 class="blink">🚀 NUCLEAR CACHE DESTROYER 🚀</h1>
+    <p>This will OBLITERATE all traces of old sound settings and force a completely clean start.</p>
+    
+    <button class="btn" onclick="nuclearReset()">💥 NUKE EVERYTHING 💥</button>
+    <button class="btn" onclick="goToCleanApp()">🎯 GO TO CLEAN APP</button>
+    
+    <div id="status"></div>
+    
+    <script>
+        function nuclearReset() {
+            document.getElementById('status').innerHTML = '<div class="status blink">💥 NUKING ALL CACHES AND SETTINGS...</div>';
+            
+            // Nuclear option - clear absolutely everything
+            try {
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // Clear all indexed DB
+                if ('indexedDB' in window) {
+                    indexedDB.databases().then(databases => {
+                        databases.forEach(db => {
+                            indexedDB.deleteDatabase(db.name);
+                        });
+                    });
+                }
+                
+                // Clear all caches
+                if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                        return Promise.all(
+                            names.map(name => caches.delete(name))
+                        );
+                    });
+                }
+                
+                // Unregister all service workers
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                        for(let registration of registrations) {
+                            registration.unregister();
+                        }
+                    });
+                }
+                
+                // Force clean settings
+                const nuclearSettings = {
+                    version: 999,
+                    bellSound: 'wooden',
+                    startBell: true,
+                    endBell: true,
+                    intervalBell: false,
+                    intervalMinutes: 5,
+                    ambientSounds: true,
+                    ambientType: 'meditate1',
+                    volume: 70,
+                    dailyReminder: false,
+                    reminderTime: '07:00'
+                };
+                localStorage.setItem('meditationSettings', JSON.stringify(nuclearSettings));
+                
+                setTimeout(() => {
+                    document.getElementById('status').innerHTML = 
+                        '<div class="status">✅ NUCLEAR RESET COMPLETE!<br>' +
+                        '💀 All old settings OBLITERATED<br>' +
+                        '🎯 Only wooden-bell.wav and meditate1.mp3 remain<br>' +
+                        '🚀 Ready for clean app launch!</div>';
+                }, 2000);
+                
+            } catch(e) {
+                document.getElementById('status').innerHTML = 
+                    '<div class="status">⚡ BRUTE FORCE RESET COMPLETE! Some items required manual clearing.</div>';
+            }
+        }
+        
+        function goToCleanApp() {
+            // Open with maximum cache busting
+            const timestamp = Date.now();
+            const randomId = Math.random().toString(36).substring(7);
+            window.open(`/index.html?nuclear=${timestamp}&clean=${randomId}&nocache=true`, '_blank');
+        }
+        
+        // Auto-nuke if accessed with auto parameter
+        if (window.location.search.includes('auto=true')) {
+            nuclearReset();
+            setTimeout(() => goToCleanApp(), 3000);
+        }
+    </script>
+</body>
+</html>
