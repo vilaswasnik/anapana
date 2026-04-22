@@ -29,8 +29,8 @@
     
     /* Theme Colors - Light Mode Default (Soft & Calming) */
     --text-primary: #2d3748;
-    --text-secondary: #718096;
-    --text-tertiary: #a0aec0;
+    --text-secondary: #4a5568;
+    --text-tertiary: #718096;
     --text-white: #ffffff;
     
     --bg-primary: #ffffff;
@@ -40,8 +40,8 @@
     --bg-glass: rgba(255, 255, 255, 0.92);
     --bg-glass-secondary: rgba(247, 250, 252, 0.8);
     
-    --border-color: #e2e8f0;
-    --border-light: rgba(237, 242, 247, 0.3);
+    --border-color: #cbd5e0;
+    --border-light: rgba(203, 213, 224, 0.4);
     
     /* Soothing Gradients for Meditation */
     --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -93,9 +93,9 @@
 
 /* Dark Mode Theme - Warm & Soothing for Evening Meditation */
 [data-theme="dark"] {
-    --text-primary: #e2e8f0;
-    --text-secondary: #cbd5e0;
-    --text-tertiary: #a0aec0;
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-tertiary: #cbd5e0;
     
     --bg-primary: #1a202c;
     --bg-secondary: #2d3748;
@@ -105,7 +105,7 @@
     --bg-glass-secondary: rgba(45, 55, 72, 0.75);
     
     --border-color: #4a5568;
-    --border-light: rgba(226, 232, 240, 0.08);
+    --border-light: rgba(226, 232, 240, 0.12);
     
     --gradient-calm: linear-gradient(135deg, #2d3561 0%, #4a4a6a 50%, #5e5e7e 100%);
     
@@ -1417,18 +1417,18 @@ a:focus:not(:focus-visible) {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
     :root {
-        --primary-color: #000080;
+        --primary-color: #5b21b6;
         --text-primary: #000000;
-        --text-secondary: #333333;
-        --gray-200: #808080;
+        --text-secondary: #1f2937;
+        --border-color: #9ca3af;
     }
 }
 
 /* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --text-primary: #e2e8f0;
-        --text-secondary: #cbd5e0;
+        --text-primary: #f7fafc;
+        --text-secondary: #e2e8f0;
         --bg-primary: #1a202c;
         --bg-secondary: #2d3748;
         --border-color: #4a5568;
