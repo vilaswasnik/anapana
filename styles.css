@@ -28,7 +28,7 @@
     --gray-900: #171717;
     
     /* Theme Colors - Light Mode Default (Ocean & Sky) */
-    --text-primary: #0c4a6e;
+    --text-primary: #0a3a52;
     --text-secondary: #075985;
     --text-tertiary: #0369a1;
     --text-white: #ffffff;
@@ -37,8 +37,8 @@
     --bg-secondary: #f0f9ff;
     --bg-tertiary: #e0f2fe;
     --bg-overlay: rgba(12, 74, 110, 0.4);
-    --bg-glass: rgba(255, 255, 255, 0.92);
-    --bg-glass-secondary: rgba(240, 249, 255, 0.85);
+    --bg-glass: rgba(255, 255, 255, 0.98);
+    --bg-glass-secondary: rgba(240, 249, 255, 0.9);
     
     --border-color: #bae6fd;
     --border-light: rgba(186, 230, 253, 0.5);
@@ -93,16 +93,16 @@
 
 /* Dark Mode Theme - Deep Ocean for Evening Meditation */
 [data-theme="dark"] {
-    --text-primary: #e0f2fe;
-    --text-secondary: #bae6fd;
-    --text-tertiary: #7dd3fc;
+    --text-primary: #f0f9ff;
+    --text-secondary: #e0f2fe;
+    --text-tertiary: #bae6fd;
     
     --bg-primary: #082f49;
     --bg-secondary: #0c4a6e;
     --bg-tertiary: #075985;
     --bg-overlay: rgba(8, 47, 73, 0.6);
-    --bg-glass: rgba(12, 74, 110, 0.95);
-    --bg-glass-secondary: rgba(12, 74, 110, 0.75);
+    --bg-glass: rgba(8, 47, 73, 0.98);
+    --bg-glass-secondary: rgba(12, 74, 110, 0.85);
     
     --border-color: #075985;
     --border-light: rgba(186, 230, 253, 0.12);
@@ -168,11 +168,12 @@ body {
 
 .app-title {
     font-size: var(--font-size-2xl);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .app-title i {
