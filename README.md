@@ -11,11 +11,14 @@
 
 **Anapana** is the ancient Buddhist meditation technique of mindful breathing - the foundation of all meditation practices. This beautiful web app brings this 2,500-year-old wisdom to your modern life with a simple, elegant timer designed specifically for breath meditation.
 
+Now enhanced with **dark mode**, **soothing colors**, and **accessibility features** for an even better meditation experience.
+
 ### ✨ Perfect for Beginners
 - **No experience needed** - Simple one-click meditation
 - **Guided by gentle bells** - Know when to start and stop
-- **Visual progress ring** - See your meditation unfold
+- **Visual progress ring** - See your meditation unfold with calming colors
 - **Built-in instructions** - Learn proper technique
+- **Dark mode** - Meditate comfortably any time of day
 
 ---
 
@@ -58,9 +61,19 @@ Just click here: **[Start Meditating Now →](https://vilaswasnik.github.io/anap
 ### 💡 **Smart Features**
 ```
 📱 Works everywhere: Phone, tablet, computer
-🌙 Easy on eyes: Beautiful dark/light themes
-⌨️ Keyboard friendly: Spacebar to start/pause
+🌙 Dark mode: One-click theme toggle for any time of day
+⌨️ Keyboard friendly: Spacebar to start/pause, full navigation
 🔄 Always reliable: Works even without internet
+♿ Accessible: Screen reader support and keyboard navigation
+```
+
+### 🎨 **NEW: Enhanced Visual Experience**
+```
+💜 Soothing colors: Meditation-inspired lavender & pastels
+✨ Smooth animations: Gentle transitions reduce eye strain
+🌅 Smart gradients: Calming nature-inspired color schemes
+🌓 Auto dark mode: Respects your system preferences
+💎 Glass effects: Modern, elegant glassmorphism design
 ```
 
 ---
@@ -140,12 +153,56 @@ Just click here: **[Start Meditating Now →](https://vilaswasnik.github.io/anap
 
 ---
 
+## 🆕 What's New (2026 Update)
+
+### 🌓 **Dark Mode & Theme System**
+- One-click theme toggle in the header
+- System preference detection (auto-adjusts to your device)
+- Warm evening colors perfect for bedtime meditation
+- Theme preference saved across sessions
+
+### 🎨 **Meditation-Inspired Design**
+- Calming lavender and purple color palette
+- Softer shadows and borders for reduced eye strain
+- Nature-inspired gradients (sage, sky, peach)
+- Thicker, more visible progress ring
+
+### ♿ **Accessibility Excellence**
+- Full keyboard navigation support
+- ARIA labels for screen readers
+- Enhanced focus indicators
+- 44px minimum touch targets for mobile
+- High contrast mode support
+- Reduced motion support
+
+### ✨ **Smooth Animations**
+- Ripple effects on button interactions
+- Gentle modal entrance animations
+- Smooth theme transitions
+- Page load fade-in
+- Respects reduced-motion preferences
+
+### 📱 **Enhanced Mobile Experience**
+- Improved responsive layouts
+- Better touch targets
+- Safe area support for notched devices
+- Optimized for all screen sizes
+
+---
+
 ## ❓ Common Questions
 
 <details>
 <summary><strong>🔰 I'm new to meditation. Where do I start?</strong></summary>
 
 Start with just 5 minutes using the wooden bell sound. Sit comfortably, close your eyes, and simply notice your breath at your nostrils. When your mind wanders (it will!), gently return to your breath. That's it!
+
+</details>
+
+<details>
+<summary><strong>🌓 How do I enable dark mode?</strong></summary>
+
+Click the moon/sun icon in the top-right corner of the app! Your preference is saved automatically. The app also respects your system's dark mode settings.
 
 </details>
 
@@ -167,6 +224,13 @@ Yes! Once you install it, the app works perfectly without internet. Great for me
 <summary><strong>💰 Is this really free? No hidden costs?</strong></summary>
 
 Completely free forever. No ads, no subscriptions, no data collection. Just pure meditation.
+
+</details>
+
+<details>
+<summary><strong>♿ Is this app accessible?</strong></summary>
+
+Yes! Full keyboard navigation (Tab/Space/Enter), screen reader support, high contrast mode, and follows WCAG accessibility guidelines.
 
 </details>
 
@@ -206,10 +270,34 @@ This app is built with love for the meditation community. Based on the authentic
 
 ---
 
+## 🛠️ Technical Details
+
+### Built With
+- **Pure HTML, CSS, JavaScript** - No frameworks, fast and lightweight
+- **Progressive Web App (PWA)** - Install and use offline
+- **CSS Custom Properties** - Dynamic theming system
+- **Local Storage** - All data stays on your device
+- **Service Worker** - Reliable offline functionality
+- **Modern CSS** - Glassmorphism, animations, transitions
+- **ARIA** - Full accessibility support
+- **Responsive Design** - Works on all devices
+
+### Key Features
+- 🎨 Dynamic dark/light theme system
+- ♿ WCAG 2.1 Level AA accessibility
+- 📱 Mobile-first responsive design
+- ⚡ < 100KB total size (ultra-fast loading)
+- 🔒 No analytics, no tracking, no external dependencies
+- 💾 Everything stored locally (privacy first)
+
+---
+
 <div align="center">
 
 **🧘‍♂️ May all beings be happy. May all beings find peace. 🕊️**
 
 *Made with 💖 for meditators everywhere*
+
+**Version 2.0 - Enhanced with Dark Mode & Accessibility**
 
 </div>
