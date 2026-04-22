@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Service Worker Cache - Anapana Timer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            max-width: 500px;
+        }
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .success { background: rgba(16, 185, 129, 0.3) !important; }
+        .error { background: rgba(239, 68, 68, 0.3) !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Clear Service Worker Cache</h1>
+        <p>If you're seeing old styles, click below to clear all caches and reload.</p>
+        
+        <button onclick="clearEverything()">Clear All Caches & Reload</button>
+        <button onclick="unregisterSW()">Unregister Service Worker</button>
+        <button onclick="location.href='/'">Go to App</button>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        const status = document.getElementById('status');
+
+        async function clearEverything() {
+            try {
+                status.innerHTML = '🔄 Clearing caches...';
+                status.className = '';
+                
+                // Clear all caches
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+                
+                // Unregister service workers
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                await Promise.all(registrations.map(r => r.unregister()));
+                
+                status.innerHTML = '✅ All caches cleared! Reloading...';
+                status.className = 'success';
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+            } catch (error) {
+                status.innerHTML = '❌ Error: ' + error.message;
+                status.className = 'error';
+            }
+        }
+
+        async function unregisterSW() {
+            try {
+                status.innerHTML = '🔄 Unregistering service workers...';
+                status.className = '';
+                
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                await Promise.all(registrations.map(r => r.unregister()));
+                
+                status.innerHTML = '✅ Service workers unregistered!';
+                status.className = 'success';
+            } catch (error) {
+                status.innerHTML = '❌ Error: ' + error.message;
+                status.className = 'error';
+            }
+        }
+    </script>
+</body>
+</html>
