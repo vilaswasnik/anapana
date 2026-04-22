@@ -116,6 +116,23 @@
     --shadow-glow: 0 0 30px rgba(14, 165, 233, 0.3);
 }
 
+/* Dark mode header styling */
+[data-theme="dark"] .app-header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #075985 100%);
+    border-bottom: 2px solid #0ea5e9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .app-title {
+    color: #f0f9ff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .app-title i {
+    color: #38bdf8;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+}
+
 html {
     width: 100%;
     height: 100%;
@@ -153,11 +170,12 @@ body {
 
 /* ===== HEADER ===== */
 .app-header {
-    background: var(--bg-glass);
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     padding: var(--space-lg) var(--space-xl);
     transition: all var(--transition-base);
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
 }
 
 .header-content {
@@ -169,16 +187,18 @@ body {
 .app-title {
     font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--text-primary);
+    color: #064e3b;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+    letter-spacing: -0.025em;
 }
 
 .app-title i {
-    color: var(--primary-color);
+    color: #0ea5e9;
     font-size: var(--font-size-xl);
+    filter: drop-shadow(0 1px 2px rgba(14, 165, 233, 0.3));
 }
 
 .header-actions {
