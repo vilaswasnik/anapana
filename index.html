@@ -28,10 +28,13 @@
                     Anapana Timer
                 </h1>
                 <div class="header-actions">
-                    <button id="statsBtn" class="icon-btn" title="Statistics">
+                    <button id="themeToggle" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="statsBtn" class="icon-btn" title="Statistics" aria-label="Open statistics">
                         <i class="fas fa-chart-bar"></i>
                     </button>
-                    <button id="settingsBtn" class="icon-btn" title="Settings">
+                    <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Open settings">
                         <i class="fas fa-cog"></i>
                     </button>
                 </div>
@@ -39,9 +42,9 @@
         </header>
 
         <!-- Main Timer Section -->
-        <main class="timer-section">
+        <main class="timer-section" role="main" aria-label="Meditation timer">
             <!-- Audio Status Notification -->
-            <div id="audioNotification" class="audio-notification" style="display: none;">
+            <div id="audioNotification" class="audio-notification" style="display: none;" role="alert" aria-live="polite">
                 <div class="notification-content">
                     <i class="fas fa-volume-mute"></i>
                     <span>Audio files not found. Using fallback bell sounds. <a href="#" id="audioHelpLink">Learn more</a></span>
@@ -87,12 +90,12 @@
 
                 <!-- Timer Controls -->
                 <div class="timer-controls">
-                    <button id="playPauseBtn" class="primary-btn">
-                        <i class="fas fa-play"></i>
+                    <button id="playPauseBtn" class="primary-btn" aria-label="Start meditation timer">
+                        <i class="fas fa-play" aria-hidden="true"></i>
                         <span>Start</span>
                     </button>
-                    <button id="resetBtn" class="secondary-btn">
-                        <i class="fas fa-stop"></i>
+                    <button id="resetBtn" class="secondary-btn" aria-label="Reset timer">
+                        <i class="fas fa-stop" aria-hidden="true"></i>
                         <span>Reset</span>
                     </button>
                 </div>
@@ -100,13 +103,13 @@
                 <!-- Quick Time Presets -->
                 <div class="time-presets">
                     <h3>Quick Start</h3>
-                    <div class="preset-buttons">
-                        <button class="preset-btn" data-time="5">5 min</button>
-                        <button class="preset-btn active" data-time="10">10 min</button>
-                        <button class="preset-btn" data-time="15">15 min</button>
-                        <button class="preset-btn" data-time="20">20 min</button>
-                        <button class="preset-btn" data-time="30">30 min</button>
-                        <button class="preset-btn" data-time="45">45 min</button>
+                    <div class="preset-buttons" role="group" aria-label="Quick time presets">
+                        <button class="preset-btn" data-time="5" aria-label="5 minutes meditation">5 min</button>
+                        <button class="preset-btn active" data-time="10" aria-label="10 minutes meditation" aria-pressed="true">10 min</button>
+                        <button class="preset-btn" data-time="15" aria-label="15 minutes meditation">15 min</button>
+                        <button class="preset-btn" data-time="20" aria-label="20 minutes meditation">20 min</button>
+                        <button class="preset-btn" data-time="30" aria-label="30 minutes meditation">30 min</button>
+                        <button class="preset-btn" data-time="45" aria-label="45 minutes meditation">45 min</button>
                     </div>
                 </div>
 
@@ -114,11 +117,11 @@
                 <div class="custom-timer">
                     <h3>Custom Duration</h3>
                     <div class="time-input">
-                        <input type="number" id="minutesInput" min="1" max="120" value="10" class="time-field">
+                        <input type="number" id="minutesInput" min="1" max="120" value="10" class="time-field" aria-label="Minutes">
                         <label for="minutesInput">minutes</label>
-                        <input type="number" id="secondsInput" min="0" max="59" value="0" class="time-field">
+                        <input type="number" id="secondsInput" min="0" max="59" value="0" class="time-field" aria-label="Seconds">
                         <label for="secondsInput">seconds</label>
-                        <button id="setCustomBtn" class="set-btn">Set</button>
+                        <button id="setCustomBtn" class="set-btn" aria-label="Set custom time">Set</button>
                     </div>
                 </div>
             </div>

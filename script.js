@@ -177,7 +177,50 @@ class MeditationTimer {
         };
     }
     
+    // Theme management
+    initializeTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        this.updateThemeIcon(savedTheme);
+    }
+    
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        this.updateThemeIcon(newTheme);
+        
+        // Add a subtle animation feedback
+        const themeBtn = document.getElementById('themeToggle');
+        if (themeBtn) {
+            themeBtn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                themeBtn.style.transform = '';
+            }, 300);
+        }
+    }
+    
+    updateThemeIcon(theme) {
+        const themeBtn = document.getElementById('themeToggle');
+        if (themeBtn) {
+            const icon = themeBtn.querySelector('i');
+            if (icon) {
+                icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+            themeBtn.setAttribute('title', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+            themeBtn.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+        }
+    }
+    
     bindEvents() {
+        // Theme toggle
+        document.getElementById('themeToggle')?.addEventListener('click', () => this.toggleTheme());
+        
+        // Initialize theme from localStorage
+        this.initializeTheme();
+        
         // Timer controls
         document.getElementById('playPauseBtn').addEventListener('click', () => this.toggleTimer());
         document.getElementById('resetBtn').addEventListener('click', () => this.resetTimer());
