@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Anapana Meditation Timer</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css?v=20260422">
+    <link rel="stylesheet" href="styles.css?v=20260424">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -24,7 +24,7 @@
         <header class="app-header">
             <div class="header-content">
                 <h1 class="app-title">
-                    <i class="fas fa-lotus-pose"></i>
+                    <i class="fas fa-spa"></i>
                     Anapana Timer
                 </h1>
                 <div class="header-actions">
@@ -85,6 +85,9 @@
                             </div>
                             <div class="session-type" id="sessionType">Anapana Practice</div>
                         </div>
+                    </div>
+                    <div id="breathingGuide" class="breathing-guide" aria-live="polite" aria-atomic="true">
+                        <span class="breathing-text">Focus on your breath</span>
                     </div>
                 </div>
 
@@ -284,7 +287,7 @@
         <div class="modal-content celebration">
             <div class="celebration-content">
                 <div class="celebration-icon">
-                    <i class="fas fa-lotus-pose"></i>
+                    <i class="fas fa-spa"></i>
                 </div>
                 <h2>Session Complete!</h2>
                 <p id="completionMessage">Great job! You've completed your meditation practice.</p>
@@ -326,7 +329,7 @@
         <source src="sounds/ambient/meditate1.mp3" type="audio/mpeg">
     </audio>
 
-    <script src="script.js?v=clean"></script>
-    <script src="enhanced-bells.js?v=clean"></script>
+    <script src="enhanced-bells.js?v=2"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>
