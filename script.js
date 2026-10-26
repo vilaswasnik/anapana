@@ -1,52 +1,5 @@
 // ===== MEDITATION TIMER APP - CORE FUNCTIONALITY =====
 
-// NUCLEAR RESET - Clear everything and force clean start
-(function() {
-    console.log('� NUCLEAR RESET - Clearing everything...');
-    
-    // Clear ALL possible storage
-    localStorage.clear();
-    sessionStorage.clear();
-    
-    // Clear all caches aggressively
-    if ('caches' in window) {
-        caches.keys().then(function(names) {
-            names.forEach(name => {
-                caches.delete(name);
-                console.log('🗑️ Nuked cache:', name);
-            });
-        });
-    }
-    
-    // Unregister all service workers
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            for(let registration of registrations) {
-                registration.unregister();
-                console.log('🗑️ Unregistered SW:', registration.scope);
-            }
-        });
-    }
-    
-    // Force override any existing settings immediately
-    const cleanSettings = {
-        version: 99,
-        bellSound: 'wooden',
-        startBell: true,
-        endBell: true,
-        intervalBell: false,
-        intervalMinutes: 5,
-        ambientSounds: true,
-        ambientType: 'meditate1',
-        volume: 70,
-        dailyReminder: false,
-        reminderTime: '07:00'
-    };
-    
-    localStorage.setItem('meditationSettings', JSON.stringify(cleanSettings));
-    console.log('✅ NUCLEAR RESET COMPLETE - Only wooden-bell.wav and meditate1.mp3 will be used');
-})();
-
 class MeditationTimer {
     constructor() {
         this.isRunning = false;
@@ -86,27 +39,31 @@ class MeditationTimer {
     }
     
     initializeApp() {
-        // Clean up any old settings that reference missing files
-        this.cleanupSettings();
-        
-        // FORCE clean settings - no matter what was saved before
-        this.settings = {
-            version: 99,
+        // Apply defaults for any missing settings keys (preserve user preferences)
+        const defaults = {
+            version: 1,
             bellSound: 'wooden',
             startBell: true,
             endBell: true,
             intervalBell: false,
             intervalMinutes: 5,
-            ambientSounds: true,
+            ambientSounds: false,
             ambientType: 'meditate1',
             volume: 70,
             dailyReminder: false,
             reminderTime: '07:00'
         };
+        this.settings = Object.assign({}, defaults, this.settings);
+        // Ensure only valid sound values are used
+        if (!['wooden'].includes(this.settings.bellSound)) {
+            this.settings.bellSound = 'wooden';
+        }
+        if (!['none', 'meditate1'].includes(this.settings.ambientType)) {
+            this.settings.ambientType = 'meditate1';
+        }
         this.saveSettings();
-        console.log('🔒 FORCED clean settings: Wooden Bell + Meditation Music ONLY');
-        
-        // Initialize stats
+
+        // Initialize stats with defaults if not present
         if (!this.stats.totalSessions) {
             this.stats = {
                 totalSessions: 0,
@@ -118,9 +75,36 @@ class MeditationTimer {
             };
             this.saveStats();
         }
+
+        // Handle PWA shortcut URL parameters
+        this.handleUrlParams();
         
         this.updateDisplay();
         this.updateProgressRing();
+    }
+
+    handleUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        const preset = params.get('preset');
+        const view = params.get('view');
+
+        if (preset) {
+            const minutes = parseInt(preset, 10);
+            if (!isNaN(minutes) && minutes > 0) {
+                this.totalSeconds = minutes * 60;
+                this.currentSeconds = this.totalSeconds;
+                // Highlight matching preset button if present
+                document.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.classList.toggle('active', parseInt(btn.dataset.time, 10) === minutes);
+                    btn.setAttribute('aria-pressed', parseInt(btn.dataset.time, 10) === minutes ? 'true' : 'false');
+                });
+            }
+        }
+
+        if (view === 'stats') {
+            // Open stats modal after a short delay to allow the UI to render
+            setTimeout(() => this.openModal('statsModal'), 300);
+        }
     }
     
     createAudioElement(id) {
@@ -128,12 +112,7 @@ class MeditationTimer {
         if (audio) {
             // Add error handling for missing audio files
             audio.addEventListener('error', () => {
-                console.log(`Audio file not found for ${id}, using fallback`);
                 this.useFallbackAudio = true;
-            });
-            
-            audio.addEventListener('canplaythrough', () => {
-                console.log(`Audio file loaded successfully for ${id}`);
             });
         }
         return audio;
@@ -354,6 +333,7 @@ class MeditationTimer {
             
             // Re-enable visual timer activity
             this.visualBells.setTimerActive(true);
+            this.setTimerRunningState(true);
             
             this.intervalId = setInterval(() => {
                 this.tick();
@@ -372,6 +352,7 @@ class MeditationTimer {
             
             // Enable visual timer activity
             this.visualBells.setTimerActive(true);
+            this.setTimerRunningState(true);
             
             // Play start bell if enabled
             if (this.settings.startBell) {
@@ -398,6 +379,7 @@ class MeditationTimer {
             
             // Disable visual timer activity during pause
             this.visualBells.setTimerActive(false);
+            this.setTimerRunningState(false);
             
             clearInterval(this.intervalId);
             
@@ -417,6 +399,7 @@ class MeditationTimer {
         
         // Disable visual timer activity
         this.visualBells.setTimerActive(false);
+        this.setTimerRunningState(false);
         
         clearInterval(this.intervalId);
         
@@ -428,6 +411,17 @@ class MeditationTimer {
         this.updateDisplay();
         this.updateProgressRing();
         this.updatePlayPauseButton();
+    }
+
+    setTimerRunningState(running) {
+        const timerCircle = document.querySelector('.timer-circle');
+        const breathingGuide = document.getElementById('breathingGuide');
+        if (timerCircle) {
+            timerCircle.classList.toggle('timer-running', running);
+        }
+        if (breathingGuide) {
+            breathingGuide.classList.toggle('visible', running);
+        }
     }
     
     tick() {
@@ -455,6 +449,7 @@ class MeditationTimer {
         
         // Disable visual timer activity
         this.visualBells.setTimerActive(false);
+        this.setTimerRunningState(false);
         
         clearInterval(this.intervalId);
         
@@ -694,7 +689,7 @@ class MeditationTimer {
         if (beep) {
             beep.play();
         } else {
-            console.log('Audio not available - bell sound skipped');
+            // Audio not available, bell silently skipped
         }
     }
     
@@ -710,7 +705,7 @@ class MeditationTimer {
     startAmbientSounds() {
         if (this.ambientAudio && this.settings.ambientType !== 'none') {
             this.ambientAudio.volume = this.settings.volume / 100 * 0.5; // Lower volume for ambient
-            this.ambientAudio.play().catch(e => console.log('Ambient audio play failed:', e));
+            this.ambientAudio.play().catch(() => {});
         }
     }
     
@@ -805,23 +800,29 @@ class MeditationTimer {
         const chartContainer = document.getElementById('weeklyChart');
         
         if (this.stats.weeklyData.length === 0) {
-            chartContainer.innerHTML = '<p>No data to display yet. Complete some sessions to see your progress!</p>';
+            chartContainer.innerHTML = '<p class="chart-empty-message">No data yet. Complete some sessions to see your progress!</p>';
             return;
         }
         
-        // Simple bar chart representation
         const latestWeek = this.stats.weeklyData[0];
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const maxMinutes = Math.max(...latestWeek.days, 1);
+        const today = new Date().getDay();
         
-        let chartHTML = '<div style="display: flex; justify-content: space-between; height: 150px; align-items: end; gap: 8px;">';
+        let chartHTML = '<div class="chart-bars">';
         
         latestWeek.days.forEach((minutes, index) => {
-            const height = (minutes / maxMinutes) * 130;
+            const heightPct = Math.round((minutes / maxMinutes) * 100);
+            const isToday = index === today;
+            const hasData = minutes > 0;
             chartHTML += `
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <div style="background: var(--primary-color); width: 24px; height: ${height}px; border-radius: 4px 4px 0 0; opacity: ${minutes > 0 ? 1 : 0.2};"></div>
-                    <span style="font-size: 12px; color: var(--text-secondary);">${days[index]}</span>
+                <div class="chart-bar-group">
+                    <div class="chart-bar-wrap">
+                        <div class="chart-bar${hasData ? ' has-data' : ''}${isToday ? ' today' : ''}" style="height:${heightPct}%">
+                            ${hasData ? `<span class="chart-bar-tip">${minutes}m</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="chart-day-label${isToday ? ' today' : ''}">${days[index]}</span>
                 </div>
             `;
         });
@@ -835,7 +836,7 @@ class MeditationTimer {
         const recentSessions = this.sessions.slice(-10).reverse();
         
         if (recentSessions.length === 0) {
-            container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No sessions yet</p>';
+            container.innerHTML = '<p class="sessions-empty">No sessions yet</p>';
             return;
         }
         
@@ -959,15 +960,7 @@ class MeditationTimer {
     }
     
     clearOldSettings() {
-        const oldSettings = JSON.parse(localStorage.getItem('meditationSettings') || '{}');
-        
-        if (oldSettings.bellSound && oldSettings.bellSound !== 'wooden') {
-            localStorage.removeItem('meditationSettings');
-        }
-        
-        if (oldSettings.ambientType && !['none', 'meditate1'].includes(oldSettings.ambientType)) {
-            localStorage.removeItem('meditationSettings');
-        }
+        // No-op: settings are validated and merged with defaults in initializeApp()
     }
     
     checkAudioStatus() {
@@ -1087,13 +1080,7 @@ class NotificationManager {
 // ===== SERVICE WORKER REGISTRATION =====
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
 }
 
@@ -1107,17 +1094,6 @@ document.addEventListener('DOMContentLoaded', () => {
         notifications.scheduleReminder();
     }
     
-    // Handle app visibility changes
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden && timer.isRunning && !timer.isPaused) {
-            // App is hidden but timer is running
-            console.log('App hidden, timer continues in background');
-        } else if (!document.hidden && timer.isRunning) {
-            // App is visible again
-            console.log('App visible, checking timer sync');
-        }
-    });
-    
     // Prevent accidental page refresh during meditation
     window.addEventListener('beforeunload', (e) => {
         if (timer.isRunning && !timer.isPaused) {
@@ -1126,15 +1102,4 @@ document.addEventListener('DOMContentLoaded', () => {
             return 'You have an active meditation session. Are you sure you want to leave?';
         }
     });
-    
-    // Handle online/offline status
-    window.addEventListener('online', () => {
-        console.log('App is online');
-    });
-    
-    window.addEventListener('offline', () => {
-        console.log('App is offline - timer continues to work');
-    });
-    
-    console.log('Anapana Meditation Timer initialized successfully');
 });

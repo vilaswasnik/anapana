@@ -1551,3 +1551,130 @@ a:focus:not(:focus-visible) {
 .app-container {
     animation: fadeInUp 0.6s ease-out;
 }
+
+/* ===== BREATHING ANIMATION ===== */
+@keyframes breathePulse {
+    0%, 100% {
+        filter: drop-shadow(0 8px 20px rgba(14, 165, 233, 0.25));
+    }
+    50% {
+        filter: drop-shadow(0 8px 32px rgba(14, 165, 233, 0.65));
+    }
+}
+
+@keyframes breatheTextCycle {
+    0%, 10% { opacity: 0; }
+    20%, 40% { opacity: 1; }
+    50%, 60% { opacity: 0; }
+    70%, 90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.timer-circle.timer-running .progress-ring {
+    animation: breathePulse 4s ease-in-out infinite;
+}
+
+.breathing-guide {
+    margin-top: var(--space-md);
+    height: 2rem;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    text-align: center;
+    pointer-events: none;
+}
+
+.breathing-guide.visible {
+    opacity: 1;
+}
+
+.breathing-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-style: italic;
+    letter-spacing: 0.05em;
+    animation: breatheTextCycle 8s ease-in-out infinite;
+}
+
+/* ===== WEEKLY CHART ===== */
+.chart-bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 150px;
+    gap: 8px;
+    padding: 0 var(--space-sm);
+}
+
+.chart-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.chart-bar-wrap {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.chart-bar {
+    width: 100%;
+    max-width: 36px;
+    min-height: 4px;
+    background: var(--border-color);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    position: relative;
+    transition: height var(--transition-base), background var(--transition-base);
+}
+
+.chart-bar.has-data {
+    background: var(--primary-color);
+    opacity: 0.7;
+}
+
+.chart-bar.today {
+    background: var(--primary-color);
+    opacity: 1;
+    box-shadow: 0 -2px 8px rgba(14, 165, 233, 0.4);
+}
+
+.chart-bar-tip {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.chart-day-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.chart-day-label.today {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.chart-empty-message {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    padding: var(--space-xl);
+}
+
+.sessions-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    padding: var(--space-lg);
+}
