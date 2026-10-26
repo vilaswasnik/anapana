@@ -1,12 +1,12 @@
 // Service Worker for Anapana Meditation Timer PWA
-const CACHE_NAME = 'anapana-timer-v20260422';
+const CACHE_NAME = 'anapana-timer-v20261026';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/script.js',
-    '/sounds/wooden-bell.wav',
-    '/sounds/ambient/meditate1.mp3',
+    './',
+    './index.html',
+    './styles.css',
+    './script.js',
+    './sounds/wooden-bell.wav',
+    './sounds/ambient/meditate1.mp3',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap'
 ];
@@ -152,7 +152,7 @@ self.addEventListener('notificationclick', event => {
     if (event.action === 'start-meditation') {
         // Open the app and start meditation
         event.waitUntil(
-            clients.openWindow('/')
+            clients.openWindow('./')
         );
     } else if (event.action === 'remind-later') {
         // Schedule another reminder in 30 minutes
@@ -160,7 +160,7 @@ self.addEventListener('notificationclick', event => {
     } else {
         // Default action - open the app
         event.waitUntil(
-            clients.openWindow('/')
+            clients.openWindow('./')
         );
     }
 });

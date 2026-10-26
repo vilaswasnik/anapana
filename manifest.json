@@ -3,13 +3,13 @@
   "short_name": "Anapana Timer",
   "description": "A beautiful, feature-rich meditation timer for Anapana (mindfulness of breathing) practice",
   "version": "1.0.0",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#6366f1",
   "background_color": "#ffffff",
   "lang": "en",
-  "scope": "/",
+  "scope": ".",
   "categories": ["health", "lifestyle", "wellness"],
   "icons": [
     {
